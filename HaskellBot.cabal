@@ -1,0 +1,19 @@
+name:               HaskellBot
+version:            1.0.0
+synopsis:           Bot criticizing Haskell
+description:        Makes fun of Haskell/Functional Programming.
+homepage:           https://www.github.com/andrewmichaud/HaskellBot.git
+license:            BSD3
+license-file:       LICENSE
+author:             Andrew Michaud
+maintainer:         bots+haskell@mail.andrewmichaud.com
+category:           Joke
+build-type:         Simple
+extra-source-files: README.md
+cabal-version:      >= 1.22
+
+executable HaskellBot
+    main-is:          Main.hs
+    build-depends:    base >= 4.7 && < 5, random >= 1.1 && < 1.2
+    hs-source-dirs:   src
+    default-language: Haskell2010
