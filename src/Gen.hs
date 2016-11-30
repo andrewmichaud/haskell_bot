@@ -16,25 +16,34 @@ import qualified Data.Char as C
 
 import qualified DataSources as D
 
+-- TODO implement a better way to reduce frequency of "monads".
 phraseOptions :: [String]
 phraseOptions = [ "x is y"
-                , "x are y"
+                , "x is y"
+                , "x are y" -- not as many options here, so do less
+                , "FP comp"
                 , "FP comp"
                 , "startup"
+                , "startup"
+                , "lang comp"
                 , "lang comp"
                 , "rev comp"
+                , "rev comp"
                 , "monads"
+                , "what is monad"
                 ]
 
 -- Handle different kinds of phrases.
 phraseHandler :: String -> [[String]]
-phraseHandler "x is y"    = [D.starters, ["is"], D.enders]
-phraseHandler "x are y"   = [D.starterPlurals, ["are"], D.enders]
-phraseHandler "FP comp"   = [D.fpLanguages, D.fpComparisonPhrases, D.fpLanguages]
-phraseHandler "startup"   = [["my new startup runs entirely on a"], D.fpLanguages, ["stack"]]
-phraseHandler "lang comp" = [D.fpLanguages, D.langComparisonPhrases, D.otherLanguages]
-phraseHandler "rev comp"  = [D.otherLanguages, D.revComparisonPhrases, D.fpLanguages]
-phraseHandler "monads"    = [map (unwords . (`replicate` "monads")) [1..(tweetPack "monads")]]
+phraseHandler "x is y"        = [D.starters, ["is"], D.enders]
+phraseHandler "x are y"       = [D.starterPlurals, ["are"], D.enders]
+phraseHandler "FP comp"       = [D.fpLanguages, D.fpComparisonPhrases, D.fpLanguages]
+phraseHandler "startup"       = [["my new startup runs entirely on a"], D.fpLanguages, ["stack"]]
+phraseHandler "lang comp"     = [D.fpLanguages, D.langComparisonPhrases, D.otherLanguages]
+phraseHandler "rev comp"      = [D.otherLanguages, D.revComparisonPhrases, D.fpLanguages]
+phraseHandler "monads"        = [map (unwords . (`replicate` "monads")) [1..(tweetPack "monads")]]
+phraseHandler "what is monad" = [["What is a monad, you ask? It is"], D.whatIsMonad]
+phraseHandler _               = phraseHandler "monads"
 
 -- Helpers.
 

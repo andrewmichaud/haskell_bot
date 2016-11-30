@@ -8,14 +8,15 @@ Stability   : experimental
 -}
 
 module DataSources ( starters
-           , starterPlurals
-           , enders
-           , fpLanguages
-           , otherLanguages
-           , fpComparisonPhrases
-           , langComparisonPhrases
-           , revComparisonPhrases
-           ) where
+                   , starterPlurals
+                   , enders
+                   , fpLanguages
+                   , otherLanguages
+                   , fpComparisonPhrases
+                   , langComparisonPhrases
+                   , revComparisonPhrases
+                   , whatIsMonad
+                   ) where
 
 -- Source material.
 starters :: [String]
@@ -25,17 +26,25 @@ starters = [ "currying"
            , "an applicative functor"
            , "currying"
            , "uncurrying"
-           , "Haskell"
            , "GHC"
            , "the Glasgow Haskell Compiler"
            , "ML"
            , "point-free notation"
-           , "IO"
            , "the IO monad"
            , "folding"
            , "mapping"
            , "tail recursion"
-           ]
+           , "tail call"
+           , "tail call optimization"
+           , "foldr"
+           , "foldl"
+           , "a thunk"
+           , "lazy evaluation"
+           , "eager evaluation"
+           , "the lambda calculus"
+           , "type safety"
+           , "type theory"
+           ] ++ fpLanguages
 
 starterPlurals :: [String]
 starterPlurals = [ "monads"
@@ -43,6 +52,8 @@ starterPlurals = [ "monads"
                  , "applicative functors"
                  , "types"
                  , "kinds"
+                 , "thunks"
+                 , "tail calls"
                  ]
 
 enders :: [String]
@@ -56,11 +67,17 @@ enders = [ "masturbatory"
          , "for cool people"
          , "pure"
          , "impure"
+         , "🔥"
+         , "🔥🗑"
+         , "🗑"
          , "✊🍆"
          , "complete garbage"
          , "literal masturbation"
          , "better than OOP"
          , "worse than Object Oriented Programming"
+         , "worse than Imperative Programming"
+         , "better than Logic Programming"
+         , "is comparable to Declarative Programming"
          , "safe"
          , "unsafe"
          , "useless for real programs"
@@ -72,6 +89,11 @@ enders = [ "masturbatory"
          , "OK I guess"
          , "fine"
          , "not fine"
+         , "only used by academics"
+         , "basically a toy, for babies"
+         , "is for children"
+         , "not OK"
+         , "is for serious programmers only"
          ]
 
 fpLanguages :: [String]
@@ -86,10 +108,13 @@ fpLanguages = [ "ML"
 
 fpComparisonPhrases :: [String]
 fpComparisonPhrases = [ "is no"
+                      , "obsoletes"
+                      , "is obsoleted by"
                       , "is much better than"
                       , "is good, but it's no"
                       , "is alright, but what you really want is"
                       , "- seriously? Why not"
+                      , "- really? You should use"
                       ]
 
 otherLanguages :: [String]
@@ -102,6 +127,15 @@ otherLanguages = [ "Python"
                  , "C++"
                  , "C#"
                  , "Clojure"
+                 , "LOLCODE"
+                 , "Whitespace"
+                 , "INTERCAL"
+                 , "GolfScript"
+                 , "Befunge"
+                 , "A Turing Machine"
+                 , "A Pushdown Automaton"
+                 , "Regular Expressions"
+                 , "Shakespeare"
                  , "F#"
                  , "Coq"
                  , "Prolog"
@@ -112,11 +146,22 @@ otherLanguages = [ "Python"
                  , "Groovy"
                  , "Erlang"
                  , "Rust"
+                 , "Malbolge"
+                 , "Assembly"
                  , "Lisp"
                  , "Racket"
                  , "R"
                  , "COBOL"
-                 , "Bash"
+                 , "Shellscript"
+                 , "PHP"
+                 , "Objective-C"
+                 , "VimL"
+                 , "Go"
+                 , "TeX"
+                 , "Swift"
+                 , "Matlab"
+                 , "Arduino"
+                 , "PowerShell"
                  ]
 
 langComparisonPhrases :: [String]
@@ -125,38 +170,53 @@ langComparisonPhrases = [ "is shit, but it's better than"
                         , "is so much better than"
                         , "really destroys"
                         , "makes me so much happier than working in"
+                        , "is much nicer to work with than"
+                        , "isn't as bad as"
                         ]
 
 revComparisonPhrases :: [String]
 revComparisonPhrases = [ "blows, I wish I was still using"
                        , "isn't the worst, but I'd rather be using"
+                       , "is blown out of the water by"
+                       , "is so much more painful to work in than"
+                       , "is so much worse than"
+                       , "actively causes me pain, unlike"
+                       , "should be reimplemented in"
+                       , "should be abandoned. Instead, we should all use"
+                       , "is a poor substitute for"
                        ]
 
--- TODO
--- monads monads monads
--- what is a monad? it's XXXX
--- flesh out existing phrases
+-- Sourced from my head, search definitions, and StackOverflow.
+whatIsMonad :: [String]
+whatIsMonad = [ "masturbation"
+              , "mathematical nonsense"
+              , "a single-celled organism, especially a flagellate protozoan, or a single cell"
+              , "a single unit; the number one"
+              , "an indivisible and hence ultimately simple entity, such as an atom or a person"
+              , "a computation builder"
+              , "a parametrized type which is an instance of the Monad type class"
+              , "a box with a thing in it"
+              , "a monoid in the category of endofunctors"
+              , "for sale"
+              , "a toy"
+              , "a serious tool"
+              , "a boxing type"
+              , "where IO happens"
+              , "where impure things happen"
+              , "Maybe"
+              , "IO"
+              , "functional programming"
+              , "a monad"
+              , "imaginary"
+              , "real"
+              , "fake"
+              , "illegal in three states"
+              , "forbidden in most countries"
+              , "illegal to export under US export control laws"
+              , "9.99"
 
--- currying
--- functional programming
--- monad
--- monads
--- functor
--- applicative functor
--- uncurry
--- kind
--- kinds
--- type
--- typeclasses
--- impure
--- tail recursion
--- The Glasgow Haskell Compiler
--- GHC
--- purity
--- impure
-
--- "Functional programming" is "really" just "monads".
--- "Functional programming" is "masturbating".
--- "Haskell" is "masturbating".
--- A monad|functor is (really just) a "NOUN".
--- Monads/functors are "NOUNS"
+              -- TODO factor out noun definitions and go find a noun source
+              , "a cat"
+              , "a joke"
+              , "a cucumber"
+              ]
