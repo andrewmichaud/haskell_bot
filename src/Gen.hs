@@ -7,174 +7,42 @@ Maintainer  : bots+haskell@gmail.com
 Stability   : experimental
 -}
 
-module Gen (
-    phraseHandler,
-    phraseOptions
-
+module Gen ( phraseHandler
+           , phraseOptions
+           , sentence
 ) where
 
-import qualified Data.Char as Char
-import qualified System.IO.Unsafe as Uh
-import qualified System.Random as Rand
+import qualified Data.Char as C
 
--- Source material.
-starters :: [String]
-starters = [ "Currying"
-           , "Functional programming"
-           , "A monad"
-           , "An applicative functor"
-           , "Currying"
-           , "Uncurrying"
-           , "Haskell"
-           , "GHC"
-           , "The Glasgow Haskell Compiler"
-           , "ML"
-           , "Point-free notation"
-           , "IO"
-           , "the IO monad"
-           , "Folding"
-           , "Mapping"
-           , "Tail recursion"
-           ]
-
-starterPlurals :: [String]
-starterPlurals = [ "Monads"
-                 , "Monoids"
-                 , "Applicative functors"
-                 , "Types"
-                 , "Kinds"
-                 ]
-
-enders :: [String]
-enders = [ "masturbatory"
-         , "the future"
-         , "bullshit"
-         , "fun"
-         , "overrated"
-         , "underrated"
-         , "for assholes"
-         , "for cool people"
-         , "pure"
-         , "impure"
-         , "✊🍆"
-         , "complete garbage"
-         , "literal masturbation"
-         , "better than OOP"
-         , "worse than Object Oriented Programming"
-         , "safe"
-         , "unsafe"
-         , "useless for real programs"
-         , "not production-ready"
-         , "imperative programming"
-         , "trash"
-         , "great"
-         , "fantastic"
-         , "OK I guess"
-         , "fine"
-         , "not fine"
-         ]
-
-fpLanguages :: [String]
-fpLanguages = [ "ML"
-              , "Caml"
-              , "Haskell"
-              , "Curry"
-              , "Frege"
-              , "Elm"
-              , "Idris"
-              ]
-
-fpComparisonPhrases :: [String]
-fpComparisonPhrases = [ "is no"
-                      , "is much better than"
-                      , "is good, but it's no"
-                      , "is alright, but what you really want is"
-                      , "- seriously? Why not"
-                      ]
-
-otherLanguages :: [String]
-otherLanguages = [ "Python"
-                 , "Perl"
-                 , "Ruby"
-                 , "JavaScript"
-                 , "CoffeeScript"
-                 , "C"
-                 , "C++"
-                 , "C#"
-                 , "Clojure"
-                 , "F#"
-                 , "Coq"
-                 , "Prolog"
-                 , "Brainfuck"
-                 , "Java"
-                 , "Scala"
-                 , "D"
-                 , "Groovy"
-                 , "Erlang"
-                 , "Rust"
-                 , "Lisp"
-                 , "Racket"
-                 , "R"
-                 , "COBOL"
-                 , "Bash"
-                 ]
-
-langComparisonPhrases :: [String]
-langComparisonPhrases = [ "is shit, but it's better than"
-                        , "isn't nearly as bad as"
-                        , "is so much better than"
-                        , "really destroys"
-                        , "makes me so much happier than working in"
-                        ]
-
-revComparisonPhrases :: [String]
-revComparisonPhrases = [ "blows, I wish I was still using"
-                       , "isn't the worst, but I'd rather be using"
-                       ]
+import qualified DataSources as D
 
 phraseOptions :: [String]
 phraseOptions = [ "x is y"
                 , "x are y"
-                , "FP comparison"
+                , "FP comp"
                 , "startup"
-                , "comparison"
-                , "rev comparison"
+                , "lang comp"
+                , "rev comp"
+                , "monads"
                 ]
 
 -- Handle different kinds of phrases.
 phraseHandler :: String -> [[String]]
-phraseHandler "x is y"         = [starters, ["is"], enders]
-phraseHandler "x are y"        = [starterPlurals, ["are"], enders]
-phraseHandler "FP comparison"  = [fpLanguages, fpComparisonPhrases, fpLanguages]
-phraseHandler "startup"        = [["My new startup runs entirely on a"] , fpLanguages , ["stack"]]
-phraseHandler "comparison"     = [fpLanguages, langComparisonPhrases, otherLanguages]
-phraseHandler "rev comparison" = [otherLanguages, revComparisonPhrases, fpLanguages]
+phraseHandler "x is y"    = [D.starters, ["is"], D.enders]
+phraseHandler "x are y"   = [D.starterPlurals, ["are"], D.enders]
+phraseHandler "FP comp"   = [D.fpLanguages, D.fpComparisonPhrases, D.fpLanguages]
+phraseHandler "startup"   = [["my new startup runs entirely on a"], D.fpLanguages, ["stack"]]
+phraseHandler "lang comp" = [D.fpLanguages, D.langComparisonPhrases, D.otherLanguages]
+phraseHandler "rev comp"  = [D.otherLanguages, D.revComparisonPhrases, D.fpLanguages]
+phraseHandler "monads"    = [map (unwords . (`replicate` "monads")) [1..(tweetPack "monads")]]
 
--- TODO
--- monads monads monads
--- what is a monad? it's XXXX
--- flesh out existing phrases
+-- Helpers.
 
--- currying
--- functional programming
--- monad
--- monads
--- functor
--- applicative functor
--- uncurry
--- kind
--- kinds
--- type
--- typeclasses
--- impure
--- tail recursion
--- The Glasgow Haskell Compiler
--- GHC
--- purity
--- impure
+-- Determine how many of a word can fit into a tweet. Assumes a space after every instance of a
+-- word and a period at the end. Rounds down.
+tweetPack :: Foldable t => t a -> Int
+tweetPack = div 140 . (+1) . foldr (\_ x -> 1 + x) 0
 
--- "Functional programming" is "really" just "monads".
--- "Functional programming" is "masturbating".
--- "Haskell" is "masturbating".
--- A monad|functor is (really just) a "NOUN".
--- Monads/functors are "NOUNS"
+-- Turn a series of words into a sentence (capitalize first letter, add period).
+sentence :: String -> String
+sentence = flip (++) "." . (\x -> C.toUpper (head x) : tail x)

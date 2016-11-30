@@ -9,34 +9,32 @@ Stability   : experimental
 this tweets
 -}
 
-module Main (
+module Main (main) where
 
-main
+import qualified System.Random as R
 
-) where
-
-import System.IO.Unsafe as Uh
-import System.Random as Rand
-
-import Gen
+import qualified Gen as G
 
 -- | Main function, runs application.
 main :: IO ()
 main = do
-    let l = length Gen.phraseOptions
-
-    i <- Rand.getStdRandom (Rand.randomR (0, l - 1))
+    -- Pick phrase option at random.
+    let l = length G.phraseOptions
+    i <- R.getStdRandom (R.randomR (0, l - 1))
 
     -- Phrase handler gives us a list of lists of potential phrase parts.
     -- We use randomness to decide which phrase parts to pick, and assemble a phrase.
-    let phraseOption      = Gen.phraseOptions !! i
-        unprocessedPhrase = Gen.phraseHandler phraseOption
-        randomHelper l    = Rand.getStdRandom (Rand.randomR (0, length l - 1))
+    let phraseOption      = G.phraseOptions !! i
+        unprocessedPhrase = G.phraseHandler phraseOption
+        randomHelper l    = R.getStdRandom $ R.randomR (0, length l - 1)
 
+    -- Get source for random phrase.
     randoms <- mapM randomHelper unprocessedPhrase
 
-    let indexHelper l i = l !! i
+    -- Select randomly until we have a single list of parts of a phrase.
+    let indexHelper l = (l !!)
         phraseParts     = zipWith indexHelper unprocessedPhrase randoms
-        phrase          = unwords phraseParts ++ "."
+        phrase          = unwords phraseParts
 
-    putStrLn phrase
+    -- Process phrase into sentence and output.
+    putStrLn $ G.sentence phrase
