@@ -12,8 +12,12 @@ this tweets
 module Main (main) where
 
 import qualified System.Random as R
+import qualified Control.Monad as CM
+import qualified Data.Char as C
+import qualified Data.Text as T
 
 import qualified Gen as G
+import qualified TwitterSetup as T
 
 -- | Main function, runs application.
 main :: IO ()
@@ -35,6 +39,33 @@ main = do
     let indexHelper l = (l !!)
         phraseParts     = zipWith indexHelper unprocessedPhrase randoms
         phrase          = unwords phraseParts
+        sentence        = G.sentence phrase
 
-    -- Process phrase into sentence and output.
-    putStrLn $ G.sentence phrase
+    -- Show what we're tweeting.
+    putStrLn "Will be tweeting:"
+    putStrLn sentence
+
+    -- TODO I think this can be a bit cleaner.
+
+    -- Get secrets. Make sure to cut newlines.
+    let secretsDir = "SECRETS/"
+        strip = CM.fmap $ reverse . dropWhile C.isSpace . reverse
+
+    accessToken <- strip $ readFile $ secretsDir ++ "ACCESS_TOKEN"
+    accessSecret <- strip $ readFile $ secretsDir ++ "ACCESS_SECRET"
+    consumerKey <- strip $ readFile $ secretsDir ++ "CONSUMER_KEY"
+    consumerSecret <- strip $ readFile $ secretsDir ++ "CONSUMER_SECRET"
+
+    -- Get OAuth credential variables.
+    let tok = T.tokens consumerKey consumerSecret
+        cred = T.credential accessToken accessSecret
+
+    -- Create API request manager.
+    mgr <- T.manager
+
+    -- Generate twInfo, which can be used to do tweeting.
+    let twInfo = T.twInfo tok cred
+
+    status <- T.tweet twInfo mgr sentence
+
+    putStrLn "Done!"

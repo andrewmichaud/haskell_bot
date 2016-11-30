@@ -14,7 +14,10 @@ cabal-version:      >= 1.22
 
 executable HaskellBot
     main-is:          Main.hs
-    other-modules:    DataSources Gen
-    build-depends:    base >= 4.7 && < 5, random >= 1.1 && < 1.2
+    other-modules:    DataSources Gen TwitterSetup
+    build-depends:    base >= 4.7 && < 5, random >= 1.1 && < 1.2,
+                      twitter-conduit >= 0.2.1 && < 0.3, bytestring >= 0.10.8 && < 0.11,
+                      text >= 1.2.2.1 && < 1.3, aeson >= 0.11.2.0 && < 0.12,
+                      twitter-types >= 0.7.2.2 && < 0.8
     hs-source-dirs:   src
     default-language: Haskell2010
