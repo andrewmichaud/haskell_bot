@@ -3,7 +3,7 @@ Module      : DataSources
 Description : Sources of nonsense to be processed by Gen.
 Copyright   : (c) Andrew Michaud, 2016
 License     : BSD3
-Maintainer  : bots+haskell@gmail.com
+Maintainer  : bots+haskell@mail.andrewmichaud.com
 Stability   : experimental
 -}
 

@@ -3,7 +3,7 @@ Module      : Main
 Description : Handles tweeting
 Copyright   : (c) Andrew Michaud, 2016
 License     : BSD3
-Maintainer  : bots+haskell@gmail.com
+Maintainer  : bots+haskell@mail.andrewmichaud.com
 Stability   : experimental
 
 this tweets

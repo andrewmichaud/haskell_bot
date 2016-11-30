@@ -3,7 +3,7 @@ Module      : Gen
 Description : Produces nonsense
 Copyright   : (c) Andrew Michaud, 2016
 License     : BSD3
-Maintainer  : bots+haskell@gmail.com
+Maintainer  : bots+haskell@mail.andrewmichaud.com
 Stability   : experimental
 -}
 
@@ -30,6 +30,8 @@ phraseOptions = [ "x is y"
                 , "rev comp"
                 , "rev comp"
                 , "monads"
+                , "what is monad"
+                , "what is monad"
                 , "what is monad"
                 ]
 
