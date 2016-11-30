@@ -13,15 +13,18 @@ module Main (main) where
 
 import qualified System.Random as R
 import qualified Control.Monad as CM
-import qualified Data.Char as C
-import qualified Data.Text as T
+import qualified Control.Concurrent as CC
+import qualified Data.Char as DC
 
 import qualified Gen as G
 import qualified TwitterSetup as T
 
+sleepMicros:: Int
+sleepMicros = 60 * 60 * 1000000
+
 -- | Main function, runs application.
 main :: IO ()
-main = do
+main = CM.forever $ do
     -- Pick phrase option at random.
     let l = length G.phraseOptions
     i <- R.getStdRandom (R.randomR (0, l - 1))
@@ -49,7 +52,7 @@ main = do
 
     -- Get secrets. Make sure to cut newlines.
     let secretsDir = "SECRETS/"
-        strip = CM.fmap $ reverse . dropWhile C.isSpace . reverse
+        strip = CM.fmap $ reverse . dropWhile DC.isSpace . reverse
 
     accessToken <- strip $ readFile $ secretsDir ++ "ACCESS_TOKEN"
     accessSecret <- strip $ readFile $ secretsDir ++ "ACCESS_SECRET"
@@ -69,3 +72,5 @@ main = do
     status <- T.tweet twInfo mgr sentence
 
     putStrLn "Done!"
+    putStrLn $ "Sleeping for " ++ show sleepMicros ++ " microseconds."
+    CC.threadDelay sleepMicros
