@@ -2,7 +2,7 @@ name:               HaskellBot
 version:            1.0.0
 synopsis:           Bot criticizing Haskell
 description:        Makes fun of Haskell/Functional Programming.
-homepage:           https://www.github.com/andrewmichaud/HaskellBot.git
+homepage:           https://www.github.com/andrewmichaud/haskell_bot.git
 license:            BSD3
 license-file:       LICENSE
 author:             Andrew Michaud
